@@ -1,9 +1,9 @@
 const { pets } = require('../models')
-const { petsDb } = pets;
+const { getPets } = pets;
 
 const petsService = async (query) => {
     try {
-        return await petsDb(query);
+        return await getPets(query);
     } catch(e) {
         throw new Error(e.message)
     }

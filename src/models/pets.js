@@ -7,7 +7,7 @@ const client = new MongoClient(uri, {
     useUnifiedTopology: true
 });
 
-const petsDb = async query => {
+const getPets = async query => {
     try {
         await client.connect();
         const pipeline = [
@@ -55,5 +55,5 @@ const petsDb = async query => {
 };
 
 module.exports = {
-    petsDb
+    getPets
 }
