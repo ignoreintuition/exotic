@@ -1,22 +1,42 @@
 const { users } = require('../models')
-const { getUsers, postUsers } = users;
+const { getUsers, postUsers, putUsers } = users;
 
-const usersService = async (query) => {
+const getUsersService = async (query) => {
     try {
         return await getUsers(query);
     } catch(e) {
         throw new Error(e.message);
     }
-}
-const usersServiceCreate = async (config) => {
+};
+
+const postUsersService = async (config) => {
     try {
         return await postUsers(config);
     } catch(e) {
         throw new Error(e.message);
     }
-}
+};
+
+const putUsersService = async (query) => {
+    try {
+        return await putUsers(query);
+    } catch(e) {
+        throw new Error(e.message);
+    }
+};
+
+const deleteUsersService = async (query) => {
+    try {
+        console.log('delete users');
+    } catch(e) {
+        throw new Error(e.message);
+    }
+};
+
 module.exports = {
-    usersService,
-    usersServiceCreate
-}
+    getUsersService,
+    postUsersService,
+    putUsersService,
+    deleteUsersService
+};
 

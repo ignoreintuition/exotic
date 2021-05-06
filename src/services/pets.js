@@ -1,7 +1,7 @@
 const { pets } = require('../models')
 const { getPets } = pets;
 
-const petsService = async (query) => {
+const getPetsService = async (query) => {
     try {
         return await getPets(query);
     } catch(e) {
@@ -10,6 +10,6 @@ const petsService = async (query) => {
 }
 
 module.exports = {
-    petsService
+    getPetsService
 }
 

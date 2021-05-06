@@ -1,10 +1,10 @@
-const { pets } = require('../services');
+const { petsService } = require('../services');
 
-const { petsService } = pets;
+const { getPetsService } = petsService;
 
 const getPets = async (req, res, next) => {
     try {
-        const pets = await petsService(req.query);
+        const pets = await getPetsService(req.query);
         res.send(pets)
     } catch(e) {
         console.log(e.message);

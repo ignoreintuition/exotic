@@ -1,10 +1,10 @@
-const species = require('./species');
-const pets = require('./pets');
-const users = require('./users');
+const speciesService = require('./species');
+const petsService = require('./pets');
+const usersService = require('./users');
 
 module.exports = {
-    species,
-    pets,
-    users
+    speciesService,
+    petsService,
+    usersService
 }
 

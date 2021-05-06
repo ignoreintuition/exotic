@@ -1,15 +1,33 @@
 const { species } = require('../models')
-const { speciesDb } = species;
+const { getSpecies, postSpecies, putSpecies } = species;
 
-const speciesService = async (query) => {
+const getSpeciesService = async (query) => {
     try {
-        return await speciesDb(query);
+        return await getSpecies(query);
     } catch(e) {
-        throw new Error(e.message)
+        throw new Error(e.message);
+    }
+}
+
+const postSpeciesService = async (query) => {
+    try {
+        return await postSpecies(query);
+    } catch(e) {
+        throw new Error(e.message);
+    }
+}
+
+const putSpeciesService = async (query) => {
+    try {
+        return await putSpecies(query);
+    } catch(e) {
+        throw new Error(e.message);
     }
 }
 
 module.exports = {
-    speciesService
+    getSpeciesService,
+    postSpeciesService,
+    putSpeciesService
 }
 
