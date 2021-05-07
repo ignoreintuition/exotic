@@ -1,4 +1,4 @@
-const { species } = require('../models')
+const { species } = require('../models');
 const { getSpecies, postSpecies, putSpecies } = species;
 
 const getSpeciesService = async (query) => {
@@ -7,7 +7,7 @@ const getSpeciesService = async (query) => {
     } catch(e) {
         throw new Error(e.message);
     }
-}
+};
 
 const postSpeciesService = async (query) => {
     try {
@@ -15,7 +15,7 @@ const postSpeciesService = async (query) => {
     } catch(e) {
         throw new Error(e.message);
     }
-}
+};
 
 const putSpeciesService = async (query) => {
     try {
@@ -23,11 +23,11 @@ const putSpeciesService = async (query) => {
     } catch(e) {
         throw new Error(e.message);
     }
-}
+};
 
 module.exports = {
     getSpeciesService,
     postSpeciesService,
     putSpeciesService
-}
+};
 

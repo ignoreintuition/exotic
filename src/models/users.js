@@ -1,6 +1,5 @@
 const { ObjectId, MongoClient } = require('mongodb');
-
-const uri = 'mongodb://localhost:27017/exotic'
+const uri = 'mongodb://localhost:27017/exotic';
 
 const client = new MongoClient(uri, {
     useNewUrlParser: true,
@@ -27,7 +26,7 @@ const getUsers = async query => {
 const postUsers = async query => {
     try {
         const usersCollection = await mongoConnect();
-        usersCollection.insert(query)
+        usersCollection.insert(query);
     } catch(e) {
         throw new Error(e.message);
     }

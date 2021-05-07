@@ -1,6 +1,5 @@
 const { ObjectId, MongoClient } = require('mongodb');
-
-const uri = 'mongodb://localhost:27017/exotic'
+const uri = 'mongodb://localhost:27017/exotic';
 
 const client = new MongoClient(uri, {
     useNewUrlParser: true,
@@ -27,7 +26,7 @@ const getSpecies = async query => {
 const postSpecies = async query => {
     try {
         const speciesCollection = await mongoConnect();
-        speciesCollection.insertOne(query)
+        speciesCollection.insertOne(query);
     } catch(e) {
         throw new Error(e.message);
     }

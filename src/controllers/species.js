@@ -17,21 +17,22 @@ const queryString = query => {
         { gestationPeriod: query.gestationPeriod }
     );
     return qs;
-}
+};
+
 const getSpecies = async (req, res, next) => {
     try {
         const species = await getSpeciesService(req.query);
-        res.send(species)
+        res.send(species);
     } catch(e) {
         console.log(e.message);
-        res.sendStatus(500)
+        res.sendStatus(500);
     }
 };
 
 const postSpecies = async (req, res, next) => {
     try {
         const qs = await queryString(req.body);
-        await postSpeciesService(qs)
+        await postSpeciesService(qs);
         res.sendStatus(201);
     } catch(e) {
         console.log(e.message);
@@ -49,8 +50,8 @@ const putSpecies = async (req, res, next) => {
         res.sendStatus(500);
     }
 };
-    module.exports = {
-        getSpecies,
-        postSpecies,
-        putSpecies
-    };
+module.exports = {
+    getSpecies,
+    postSpecies,
+    putSpecies
+};

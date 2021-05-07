@@ -14,17 +14,17 @@ const queryString = query => {
 const getUsers = async (req, res, next) => {
     try {
         const users = await getUsersService(req.query);
-        res.send(users)
+        res.send(users);
     } catch(e) {
         console.log(e.message);
         res.sendStatus(500);
     }
-}
+};
 
 const postUsers = async (req, res, next) => {
     try {
         const qs = await queryString(req.body);
-        await postUsersService(qs)
+        await postUsersService(qs);
         res.sendStatus(201);
     } catch(e) {
         console.log(e.message);

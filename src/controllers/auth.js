@@ -12,7 +12,7 @@ const auth = app => {
         }
     ));
     return passport;
-}
+};
 module.exports = {
     auth: auth
-}
+};

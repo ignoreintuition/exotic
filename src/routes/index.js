@@ -39,4 +39,4 @@ router.delete('/users',
     bearerToken.authenticate('bearer', { session: false }),
     users.deleteUsers
 );
-module.exports = router
+module.exports = router;

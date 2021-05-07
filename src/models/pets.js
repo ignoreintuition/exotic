@@ -1,6 +1,5 @@
 const { MongoClient } = require('mongodb');
-
-const uri = 'mongodb://localhost:27017/exotic'
+const uri = 'mongodb://localhost:27017/exotic';
 
 const client = new MongoClient(uri, {
     useNewUrlParser: true,
@@ -56,4 +55,4 @@ const getPets = async query => {
 
 module.exports = {
     getPets
-}
+};
