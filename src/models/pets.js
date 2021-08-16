@@ -6,6 +6,13 @@ const client = new MongoClient(uri, {
     useUnifiedTopology: true
 });
 
+const mongoConnect = async () => {
+    await client.connect();
+    const database = await client.db('exotic');
+    const petsCollection = await database.collection('pets');
+    return petsCollection;
+};
+
 const getPets = async query => {
     try {
         await client.connect();
@@ -44,15 +51,47 @@ const getPets = async query => {
                     species: "$pet_species.species"
                 }
             }];
-        const aggCursor =  await client.db('exotic')
-            .collection('pets')
-            .aggregate(pipeline);
-        return aggCursor.toArray();
+        const pets = await mongoConnect();
+        const petsAgg = pets.aggregate(pipeline);
+        return petsAgg.toArray();
     } catch(e) {
         throw new Error(e.message);
     }
 };
 
+const postPets = async query => {
+    try {
+        const petsCollection = await mongoConnect();
+        petsCollection.insert(query);
+    } catch(e) {
+        throw new Error(e.message);
+    }
+};
+
+const putPets = async query => {
+    try {
+        const petsCollection = await mongoConnect();
+        petsCollection.updateOne(
+            { "_id": query._id },
+            { $set: query },
+            { upsert: true }
+        );
+    } catch(e) {
+        throw new Error(e.message);
+    }
+};
+
+const deletePets = async query => {
+    try {
+        const petsCollection = await mongoConnect();
+        petsCollection.remove( { "_id": query._id } );
+    } catch(e) {
+        throw new Error(e.message);
+    }
+};
 module.exports = {
-    getPets
+    getPets,
+    postPets,
+    putPets,
+    deletePets
 };

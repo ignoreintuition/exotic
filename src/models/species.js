@@ -34,22 +34,28 @@ const postSpecies = async query => {
 
 const putSpecies = async query => {
     try {
-        if (!query["_id"]) return null;
-        const id = new ObjectId(query["_id"]);
-        delete query["_id"];
         const speciesCollection = await mongoConnect();
         speciesCollection.updateOne(
-            { "_id": id },
+            { "_id": query._id },
             { $set: query },
             { upsert: true }
         );
     } catch(e) {
-        console.log(e.message);
+        throw new Error(e.message);
     }
 };
 
+const deleteSpecies = async query => {
+    try {
+        const usersCollection = await mongoConnect();
+        usersCollection.remove( { "_id": query._id } );
+    } catch(e) {
+        throw new Error(e.message);
+    }
+};
 module.exports = {
     getSpecies,
     postSpecies,
-    putSpecies
+    putSpecies,
+    deleteSpecies
 }

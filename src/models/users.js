@@ -34,23 +34,29 @@ const postUsers = async query => {
 
 const putUsers = async query => {
     try {
-        console.log(query)
-        if (!query["_id"]) return null;
-        const id = new ObjectId(query["_id"]);
-        delete query["_id"];
         const usersCollection = await mongoConnect();
         usersCollection.updateOne(
-            { "_id": id },
+            { "_id": query._id },
             { $set: query },
             { upsert: true }
         );
     } catch(e) {
-        console.log(e.message);
+        throw new Error(e.message);
+    }
+};
+
+const deleteUsers = async query => {
+    try {
+        const usersCollection = await mongoConnect();
+        usersCollection.remove( { "_id": query._id } );
+    } catch(e) {
+        throw new Error(e.message);
     }
 };
 
 module.exports = {
     getUsers,
     postUsers,
-    putUsers
-}
+    putUsers,
+    deleteUsers
+};

@@ -1,22 +1,26 @@
 const { usersService } = require('../services');
+const { ObjectId } = require('mongodb');
 const { getUsersService, postUsersService, putUsersService, deleteUsersService } = usersService;
 
 const queryString = query => {
-    const qs = Object.assign(
-        { "_id": query["_id"] },
-        { email: query.email },
-        { fName: query.fName },
-        { lName: query.lName }
-    );
+    const qs = {};
+    for (const nvp in query) {
+        if (nvp === "_id") {
+            qs._id = new ObjectId(query[nvp]);
+        }
+        else if (['email', 'fName', 'lName'].indexOf(nvp) >= 0)
+            qs[nvp] = query[nvp];
+    }
     return qs;
 };
 
 const getUsers = async (req, res, next) => {
     try {
-        const users = await getUsersService(req.query);
+        const qs = await queryString(req.body);
+        const users = await getUsersService(qs);
         res.send(users);
     } catch(e) {
-        console.log(e.message);
+        throw new Error(e.message);
         res.sendStatus(500);
     }
 };
@@ -27,7 +31,7 @@ const postUsers = async (req, res, next) => {
         await postUsersService(qs);
         res.sendStatus(201);
     } catch(e) {
-        console.log(e.message);
+        throw new Error(e.message);
         res.sendStatus(500);
     }
 };
@@ -38,7 +42,7 @@ const putUsers = async (req, res, next) => {
         await putUsersService(qs);
         res.sendStatus(200);
     } catch(e) {
-        console.log(e.message);
+        throw new Error(e.message);
         res.sendStatus(500);
     }
 };
@@ -49,7 +53,7 @@ const deleteUsers = async (req, res, next) => {
         await deleteUsersService(qs);
         res.sendStatus(200);
     } catch(e) {
-        console.log(e.message);
+        throw new Error(e.message);
         res.sendStatus(500);
     }
 };

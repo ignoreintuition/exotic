@@ -1,18 +1,18 @@
-const { petsService } = require('../services');
+const { recipesService } = require('../services');
 
-const { getPetsService, postPetsService, putPetsService, deletePetsService} = petsService;
+const { getRecipesService, postRecipesService, putRecipesService, deleteRecipesServices } = recipesService;
 
-const getPets = async (req, res, next) => {
+const getRecipes = async (req, res, next) => {
     try {
-        const pets = await getPetsService(req.query);
-        res.send(pets);
+        const recipes = await getRecipesService(req.query);
+        res.send(recipes);
     } catch(e) {
         throw new Error(e.message);
         res.sendStatus(500);
     }
 };
 
-const postPets = async (req, res, next) => {
+const postRecipes = async (req, res, next) => {
     try {
         const qs = await queryString(req.body);
         await postPetsService(qs);
@@ -23,10 +23,10 @@ const postPets = async (req, res, next) => {
     }
 };
 
-const putPets = async (req, res, next) => {
+const putRecipes = async (req, res, next) => {
     try {
         const qs = await queryString(req.body);
-        await putPetsService(qs);
+        await putRecipesService(qs);
         res.sendStatus(200);
     } catch(e) {
         throw new Error(e.message);
@@ -34,21 +34,19 @@ const putPets = async (req, res, next) => {
     }
 };
 
-const deletePets = async (req, res, next) => {
+const deleteRecipes = async (req, res, next) => {
     try {
         const qs = await queryString(req.body);
-        await deletePetsService(qs);
+        await deleteRecipesService(qs);
         res.sendStatus(200);
     } catch(e) {
         throw new Error(e.message);
         res.sendStatus(500);
     }
 };
-
-
 module.exports = {
-    getPets,
-    postPets,
-    putPets,
-    deletePets
+    getRecipes,
+    postRecipes,
+    putRecipes,
+    deleteRecipes
 };

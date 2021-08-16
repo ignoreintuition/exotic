@@ -1,5 +1,5 @@
 const { species } = require('../models');
-const { getSpecies, postSpecies, putSpecies } = species;
+const { getSpecies, postSpecies, putSpecies, deleteSpecies} = species;
 
 const getSpeciesService = async (query) => {
     try {
@@ -25,9 +25,18 @@ const putSpeciesService = async (query) => {
     }
 };
 
+const deleteSpeciesService = async (query) => {
+    try {
+        return await deleteSpecies(query);
+    } catch(e) {
+        throw new Error(e.message);
+    }
+};
+
 module.exports = {
     getSpeciesService,
     postSpeciesService,
-    putSpeciesService
+    putSpeciesService,
+    deleteSpeciesService
 };
 

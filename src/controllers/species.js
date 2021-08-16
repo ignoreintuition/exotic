@@ -1,30 +1,27 @@
 const { speciesService } = require('../services');
-const { getSpeciesService, postSpeciesService, putSpeciesService } = speciesService;
+const { ObjectId } = require('mongodb');
+const { getSpeciesService, postSpeciesService, putSpeciesService, deleteSpeciesService } = speciesService;
 const { toArray } = require('../utils');
 
 const queryString = query => {
-    const qs = Object.assign(
-        { '_id': query['_id'] ? query['_id'] : '' },
-        { class: query.class ? query.class : '' },
-        { subfamily: query.subfamily ? query.subfamily : '' },
-        { species: query.species ? query.species : '' },
-        { skin: query.skin ? query.skin : '' },
-        { diet: query.diet ? toArray(query.diet) : '' },
-        { circadianRhythm: query.circadianRhythm ? toArray(query.circadianRhythm) : [] },
-        { lifespan: query.lifespan ? query.lifespan : ''},
-        { size: query.size ? query.size : '' },
-        { weight: query.weight ? query.weight : []},
-        { gestationPeriod: query.gestationPeriod }
-    );
+    const qs = {};
+    for (const nvp in query) {
+        if (nvp === "_id") {
+            qs._id = new ObjectId(query[nvp]);
+        }
+        else if (['class', 'subfamily', 'species', 'skin', 'diet', 'circadianRhythm'].indexOf(nvp) >= 0)
+            qs[nvp] = toArray(query[nvp]);
+    }
     return qs;
 };
 
 const getSpecies = async (req, res, next) => {
     try {
-        const species = await getSpeciesService(req.query);
+        const qs = await queryString(req.body);
+        const species = await getSpeciesService(qs);
         res.send(species);
     } catch(e) {
-        console.log(e.message);
+        throw new Error(e.message);
         res.sendStatus(500);
     }
 };
@@ -35,7 +32,7 @@ const postSpecies = async (req, res, next) => {
         await postSpeciesService(qs);
         res.sendStatus(201);
     } catch(e) {
-        console.log(e.message);
+        throw new Error(e.message);
         res.sendStatus(500);
     }
 };
@@ -46,12 +43,25 @@ const putSpecies = async (req, res, next) => {
         await putSpeciesService(qs);
         res.sendStatus(200);
     } catch(e) {
-        console.log(e.message);
+        throw new Error(e.message);
         res.sendStatus(500);
     }
 };
+
+const deleteSpecies = async (req, res, next) => {
+    try {
+        const qs = await queryString(req.body);
+        await deleteSpeciesService(qs);
+        res.sendStatus(200);
+    } catch(e) {
+        throw new Error(e.message);
+        res.sendStatus(500);
+    }
+};
+
 module.exports = {
     getSpecies,
     postSpecies,
-    putSpecies
+    putSpecies,
+    deleteSpecies
 };

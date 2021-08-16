@@ -1,5 +1,5 @@
 const { users } = require('../models');
-const { getUsers, postUsers, putUsers } = users;
+const { getUsers, postUsers, putUsers, deleteUsers } = users;
 
 const getUsersService = async (query) => {
     try {
@@ -27,7 +27,7 @@ const putUsersService = async (query) => {
 
 const deleteUsersService = async (query) => {
     try {
-        console.log('delete users');
+        return await deleteUsers(query);
     } catch(e) {
         throw new Error(e.message);
     }
